@@ -1,0 +1,37 @@
+create PROCEDURE InsertarUsuario(
+	p_Nombre varchar(30),
+	p_Correo varchar(30),
+    p_Contraseña varchar(20),
+    p_Telefono varchar(20)
+)
+begin
+	if not exists(
+		select * from Usuarios where Correo = p_Correo
+    )
+	then
+    insert into Usuarios(Nombre, Correo, Contraseña, Telefono)
+    values(p_Nombre, p_Correo,p_Contraseña, p_Telefono);
+    select 'agregado' as msg;
+    end if;
+end
+======================================================================================================
+drop procedure InsertarCursos;
+delimiter //
+create procedure InsertarCursos(
+	p_Nombre varchar(30), 
+    p_Cupo int,
+    p_Tipo varchar(20), 
+    p_Precio float, 
+    p_FechaInicio date
+)
+begin
+	if not exists(
+		select * from Cursos where Nombre = p_Nombre
+    )
+	then
+	insert into Cursos(Nombre, Cupo, Tipo, Precio, FechaInicio)
+    values(p_Nombre, p_Cupo, p_Tipo, p_Precio, p_FechaInicio);
+    select 'agregado' as msg;
+    end if;
+end
+======================================================================================================
