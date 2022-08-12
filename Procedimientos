@@ -62,3 +62,35 @@ begin
 end
 
 ==============================================================================
+delimiter //
+create procedure Detalle_Entrada(
+	p_IdBlog int,
+    p_Descripcion varchar(300)
+)
+begin 
+	if exists(
+		select * from Blog where IdBlog = p_IdBlog
+    )
+    then
+    insert into DetalleBlog(IdBlog,Descripcion)
+    values(p_IdBlog,p_Descripcion);
+    end if;
+end
+=========================================================================================
+delimiter //
+create procedure EliminaCursos(
+	p_IdCurso int
+)
+begin
+	delete from DetalleCursos where IdCurso = p_IdCurso;
+	delete from Cursos where IdCurso = p_IdCurso;
+end
+==========================================================================================
+delimiter //
+create procedure EliminaBlog(
+	p_IdBlog int
+)
+begin
+	delete from DetalleBlog where IdBlog = p_IdBlog;
+	delete from Blog where IdBlog = p_IdBlog;
+end
