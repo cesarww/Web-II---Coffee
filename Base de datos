@@ -1,0 +1,35 @@
+create database cafe;
+use cafe;
+drop database cafe;
+
+create table Usuarios(
+	IdUsuario int not null primary key auto_increment,
+    Nombre varchar(30) not null,
+    Correo varchar(30) not null,
+    Contraseña varchar(20) not null,
+	Telefono varchar(20) not null
+);
+
+create table Cursos(
+	IdCurso int not null primary key auto_increment,
+    Nombre varchar(30) not null,
+    Precio float not null,
+	Cupo int not null,
+	Imagen varchar(900) not null,
+    Descripcion varchar(200) not null
+);
+
+create table DetalleCursos(
+	IdCurso int not null,
+    IdUsuario int not null,
+    FechaReg date not null,
+    foreign key(IdCurso) references Cursos(IdCurso),
+    foreign key(IdUsuario) references Usuarios(IdUsuario)
+);
+
+create table Blog(
+	IdBlog int not null primary key auto_increment,
+    Titulo varchar(30) not null,
+    Imagen varchar(900),
+    Descripcion varchar(100)
+)
