@@ -1,0 +1,64 @@
+delimiter //
+create PROCEDURE InsertarUsuario(
+	p_Nombre varchar(30),
+	p_Correo varchar(30),
+    p_Contraseña varchar(20),
+    p_Telefono varchar(20)
+)
+begin
+	if not exists(
+		select * from Usuarios where Correo = p_Correo
+    )
+	then
+    insert into Usuarios(Nombre, Correo, Contraseña, Telefono)
+    values(p_Nombre, p_Correo,p_Contraseña, p_Telefono);
+    select 'agregado' as msg;
+    else
+    select 'no_agregado' as msg;
+    end if;
+end
+======================================================================================================
+delimiter //
+create procedure InsertarCursos(
+	p_Nombre varchar(30), 
+	p_Precio float,
+    p_Cupo int,
+    p_Imagen varchar(900),
+    p_Descripcion varchar(100)
+)
+begin
+	insert into Cursos(Nombre, Precio,Cupo, Imagen,Descripcion)
+    values(p_Nombre, p_Precio, p_Cupo, p_Imagen, p_Descripcion);
+end
+=================================================================================================
+delimiter //
+create procedure registrarse_curso(
+	p_IdCurso int,
+    p_IdUsuario int
+)
+begin
+	if exists(
+		select * from Cursos where IdCurso = p_IdCurso
+    )
+    and exists(
+		select * from Usuarios where IdUsuario = p_IdUsuario
+    )
+	then
+	insert into DetalleCursos(IdCurso,IdUsuario,FechaReg)
+    values(p_IdCurso,p_IdUsuario,NOW());
+    update Cursos set Cupo =  Cupo -1 where IdCurso = p_IdCurso; 
+    end if;
+end
+======================================================================
+delimiter // 
+create procedure InsertarBlog(
+	p_Titulo varchar(30),
+    p_Imagen varchar(900),
+    p_Descripcion varchar(100)
+)
+begin
+	insert into Blog(Titulo,Imagen,Descripcion)
+    values(p_Titulo,p_Imagen,p_Descripcion);
+end
+
+==============================================================================
